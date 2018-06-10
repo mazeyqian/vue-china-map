@@ -2,7 +2,7 @@
 
 ![闪闪发光中国地图](./images/china-map.png)
 
-### 一. 生成项目及安装插件
+## 一. 生成项目及安装插件
 
 ```
 # 安装vue-cli
@@ -27,7 +27,7 @@ npm install axios --save
 npm install echarts --save
 ```
 
-### 二. 项目结构
+## 二. 项目结构
 ```
 ├── index.html
 ├── main.js
@@ -39,7 +39,7 @@ npm install echarts --save
         └── ChinaMap.js   # 中国地图Vuex模块
 ```
 
-### 三. 引入中国地图并绘制基本的图表
+## 三. 引入中国地图并绘制基本的图表
 
 1.按需求引入与中国地图相关的Echarts图表和组件。
 
@@ -198,7 +198,7 @@ chinaMap.setOption({
   })
 ```
 
-### 四. 配置Vuex管理和分发数据
+## 四. 配置Vuex管理和分发数据
 
 1.在ChinaMap.js中引入vuex和axios。
 
@@ -287,7 +287,7 @@ if (state.isLoading) {
 }
 ```
 
-### 五. 其它
+## 五. 其它
 
 别忘了在main.js里面引入Vuex。
 
