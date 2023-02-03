@@ -55,7 +55,7 @@
             return params.name + ' : ' + params.value[2]
           }
         },
-        // 图例按钮 点击可选择哪些不显示
+        // 图例按钮，点击可选择哪些不显示
         legend: {
           orient: 'vertical',
           left: 'left',
@@ -69,7 +69,7 @@
         geo: {
           map: 'china',
           label: {
-            // true会显示城市名
+            // `true` 会显示城市名
             emphasis: {
               show: false
             }
@@ -92,7 +92,7 @@
             name: '地区热度',
             // 表的类型 这里是散点
             type: 'scatter',
-            // 使用地理坐标系，通过 geoIndex 指定相应的地理坐标系组件
+            // 使用地理坐标系，通过 `geoIndex` 指定相应的地理坐标系组件
             coordinateSystem: 'geo',
             data: [],
             // 标记的大小
@@ -121,7 +121,7 @@
             name: 'top5',
             // 表的类型 这里是散点
             type: 'effectScatter',
-            // 使用地理坐标系，通过 geoIndex 指定相应的地理坐标系组件
+            // 使用地理坐标系，通过 `geoIndex` 指定相应的地理坐标系组件
             coordinateSystem: 'geo',
             data: [],
             // 标记的大小

@@ -9,10 +9,10 @@
 npm install vue-cli -g
 
 # 初始化项目
-vue init webpack china-map
+vue init webpack vue-china-map
 
 # 切到目录下
-cd china-map
+cd vue-china-map
 
 # 安装项目依赖
 npm install
@@ -90,7 +90,7 @@ DOM 容器：
 let chinaMap = echarts.init(document.getElementById('china-map'))
 ```
 
-3.4 设置初始化的空白地图，这里需要设置很多 ECharts 参数，参考[ECharts 配置项手册](http://echarts.baidu.com/option.html)。
+3.4 设置初始化的空白地图，这里需要设置很多 ECharts 参数，参考 [ECharts 配置项手册](http://echarts.baidu.com/option.html)。
 
 ```
 
@@ -177,7 +177,7 @@ chinaMap.setOption({
       name: 'top5',
       // 表的类型，这里是散点
       type: 'effectScatter',
-      // 使用地理坐标系，通过 geoIndex 指定相应的地理坐标系组件
+      // 使用地理坐标系，通过 `geoIndex` 指定相应的地理坐标系组件
       coordinateSystem: 'geo',
       data: [],
       // 标记的大小
