@@ -1,39 +1,34 @@
-# Folders
-build/
+# Output folders
 node_modules/
-test/
-doc/
-docs/
+dist/
+test/unit/coverage
+test/e2e/reports
+
+# Cache folders
+.sass-cache/
 undefined/
 temp/
 
-# .
+# Editor directories and files
 .idea
 .vscode
-.editorconfig
-.eslintignore
-.lintstagedrc
-.prettierignore
-.prettierrc
-.eslintrc.js
-.babelrc
-.eslintrc
-
-# *
-*.yml
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 
-# Files
-yarn.lock
-yarn-error.log
+# System files
+.DS_Store
+
+# Local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+selenium-debug.log*
+
+# Lock files
 package-lock.json
-api-extractor.json
-commitlint.config.js
-rollup.config.js
-webpack.config.js
-jsdoc.config.json
-tsconfig.json
-typing.d.ts
