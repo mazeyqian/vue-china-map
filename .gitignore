@@ -1,17 +1,40 @@
-.DS_Store
+# Folders
+build/
 node_modules/
-dist/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-test/unit/coverage
-test/e2e/reports
-selenium-debug.log
+test/
+doc/
+docs/
+undefined/
+temp/
 
-# Editor directories and files
+# .
 .idea
 .vscode
+.editorconfig
+.eslintignore
+.lintstagedrc
+.prettierignore
+.prettierrc
+.eslintrc.js
+.babelrc
+.eslintrc
+.npmrc
+
+# *
+*.yml
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+
+# Files
+yarn.lock
+yarn-error.log
+package-lock.json
+api-extractor.json
+commitlint.config.js
+rollup.config.js
+webpack.config.js
+jsdoc.config.json
+tsconfig.json
+typing.d.ts
