@@ -1,75 +1,82 @@
-# vue+vuex+axios+echarts画一个动态更新的中国地图
+# Vue+Vuex+Axios+ECharts 画一个动态更新的中国地图
 
-![闪闪发光中国地图](./images/china-map.png)
+![中国地图闪闪发光](./images/china-map.png)
 
-## 一. 生成项目及安装插件
+## 一、生成项目及安装插件
 
 ```
-# 安装vue-cli
+# 安装 Vue Cli
 npm install vue-cli -g
 
 # 初始化项目
-vue init webpack china-map
+vue init webpack vue-china-map
 
 # 切到目录下
-cd china-map
+cd vue-china-map
 
 # 安装项目依赖
 npm install
 
-# 安装 vuex
+# 安装 Vuex
 npm install vuex --save
 
-# 安装 axios
+# 安装 Axios
 npm install axios --save
 
 # 安装 ECharts
 npm install echarts --save
 ```
 
-## 二. 项目结构
+## 二、项目结构
+
 ```
 ├── index.html
 ├── main.js
 ├── components
 │   └── index.vue
 └── store
-    ├── index.js          # 组装模块及导出store的文件
+    ├── index.js          # 组装模块及导出 `store` 的文件
     └── modules
-        └── ChinaMap.js   # 中国地图Vuex模块
+        └── ChinaMap.js   # 中国地图 Vuex 模块
 ```
 
-## 三. 引入中国地图并绘制基本的图表
+## 三、引入中国地图并绘制基本的图表
 
-1.按需求引入与中国地图相关的Echarts图表和组件。
+3.1 按需求引入与中国地图相关的 ECharts 图表和组件。
 
 ```
 // 主模块
 let echarts = require('echarts/lib/echarts')
+
 // 散点图
 require('echarts/lib/chart/scatter')
+
 // 散点图放大
 require('echarts/lib/chart/effectScatter')
+
 // 地图
 require('echarts/lib/chart/map')
+
 // 图例
 require('echarts/lib/component/legend')
+
 // 提示框
 require('echarts/lib/component/tooltip')
-// 地图geo
+
+// 地图 GEO
 require('echarts/lib/component/geo')
 ```
 
-2.引入中国地图JS文件，会自动注册地图；也可以通过axios方式引入json文件，需要**手动注册**`echarts.registerMap('china', chinaJson.data)`。
+3.2 引入中国地图 JavaScript 文件，会自动注册地图；也可以通过 Axios 方式引入 JSON 文件，需要**手动注册** `echarts.registerMap('china', chinaJson.data)`。
 
 ```
-// 中国地图JS文件
+// 中国地图 JavaScript 文件
 require('echarts/map/js/china')
 ```
 
-3.准备一个有固定宽高的DOM容器并在mounted里面初始化一个echarts实例。
+3.3 准备一个有固定宽高的 DOM 容器并在 `mounted` 里面初始化一个 ECharts 实例。
 
-DOM容器
+DOM 容器：
 
 ```
 <template>
@@ -77,136 +84,136 @@ DOM容器
 </template>
 ```
 
-初始化echarts实例
+初始化 ECharts 实例：
 
 ```
 let chinaMap = echarts.init(document.getElementById('china-map'))
 ```
 
-4.设置初始化的空白地图，这里需要设置很多echarts参数，参考[ECharts配置项手册](http://echarts.baidu.com/option.html)。
-
+3.4 设置初始化的空白地图，这里需要设置很多 ECharts 参数，参考 [ECharts 配置项手册](http://echarts.baidu.com/option.html)。
 
 ```
+
 chinaMap.setOption({
-    backgroundColor: '#272D3A',
-    // 标题
-    title: {
-      text: '中国地图闪闪发光',
-      left: 'center',
-      textStyle: {
-        color: '#fff'
-      }
-    },
-    // 地图上圆点的提示
-    tooltip: {
-      trigger: 'item',
-      formatter: function (params) {
-        return params.name + ' : ' + params.value[2]
-      }
-    },
-    // 图例按钮 点击可选择哪些不显示
-    legend: {
-      orient: 'vertical',
-      left: 'left',
-      top: 'bottom',
-      data: ['地区热度', 'top5'],
-      textStyle: {
-        color: '#fff'
-      }
-    },
-    // 地理坐标系组件
-    geo: {
-      map: 'china',
-      label: {
-        // true会显示城市名
-        emphasis: {
-          show: false
-        }
-      },
-      itemStyle: {
-        // 地图背景色
-        normal: {
-          areaColor: '#465471',
-          borderColor: '#282F3C'
-        },
-        // 悬浮时
-        emphasis: {
-          areaColor: '#8796B4'
-        }
-      }
-    },
-    // 系列列表
-    series: [
-      {
-        name: '地区热度',
-        // 表的类型 这里是散点
-        type: 'scatter',
-        // 使用地理坐标系，通过 geoIndex 指定相应的地理坐标系组件
-        coordinateSystem: 'geo',
-        data: [],
-        // 标记的大小
-        symbolSize: 12,
-        // 鼠标悬浮的时候在圆点上显示数值
-        label: {
-          normal: {
-            show: false
-          },
-          emphasis: {
-            show: false
-          }
-        },
-        itemStyle: {
-          normal: {
-            color: '#ddb926'
-          },
-          // 鼠标悬浮的时候圆点样式变化
-          emphasis: {
-            borderColor: '#fff',
-            borderWidth: 1
-          }
-        }
-      },
-      {
-        name: 'top5',
-        // 表的类型 这里是散点
-        type: 'effectScatter',
-        // 使用地理坐标系，通过 geoIndex 指定相应的地理坐标系组件
-        coordinateSystem: 'geo',
-        data: [],
-        // 标记的大小
-        symbolSize: 12,
-        showEffectOn: 'render',
-        rippleEffect: {
-          brushType: 'stroke'
-        },
-        hoverAnimation: true,
-        label: {
-          normal: {
-            show: false
-          }
-        },
-        itemStyle: {
-          normal: {
-            color: '#f4e925',
-            shadowBlur: 10,
-            shadowColor: '#333'
-          }
-        },
-        zlevel: 1
-      }
-    ]
-  })
+  backgroundColor: '#272D3A',
+  // 标题
+  title: {
+    text: '中国地图闪闪发光',
+    left: 'center',
+    textStyle: {
+      color: '#fff'
+    }
+  },
+  // 地图上圆点的提示
+  tooltip: {
+    trigger: 'item',
+    formatter: function (params) {
+      return params.name + ' : ' + params.value[2];
+    }
+  },
+  // 图例按钮，点击可选择哪些不显示
+  legend: {
+    orient: 'vertical',
+    left: 'left',
+    top: 'bottom',
+    data: ['地区热度', 'top5'],
+    textStyle: {
+      color: '#fff'
+    }
+  },
+  // 地理坐标系组件
+  geo: {
+    map: 'china',
+    label: {
+      // `true` 会显示城市名
+      emphasis: {
+        show: false
+      }
+    },
+    itemStyle: {
+      // 地图背景色
+      normal: {
+        areaColor: '#465471',
+        borderColor: '#282F3C'
+      },
+      // 悬浮时
+      emphasis: {
+        areaColor: '#8796B4'
+      }
+    }
+  },
+  // 系列列表
+  series: [
+    {
+      name: '地区热度',
+      // 表的类型，这里是散点
+      type: 'scatter',
+      // 使用地理坐标系，通过 `geoIndex` 指定相应的地理坐标系组件
+      coordinateSystem: 'geo',
+      data: [],
+      // 标记的大小
+      symbolSize: 12,
+      // 鼠标悬浮的时候在圆点上显示数值
+      label: {
+        normal: {
+          show: false
+        },
+        emphasis: {
+          show: false
+        }
+      },
+      itemStyle: {
+        normal: {
+          color: '#ddb926'
+        },
+        // 鼠标悬浮的时候圆点样式变化
+        emphasis: {
+          borderColor: '#fff',
+          borderWidth: 1
+        }
+      }
+    },
+    {
+      name: 'top5',
+      // 表的类型，这里是散点
+      type: 'effectScatter',
+      // 使用地理坐标系，通过 `geoIndex` 指定相应的地理坐标系组件
+      coordinateSystem: 'geo',
+      data: [],
+      // 标记的大小
+      symbolSize: 12,
+      showEffectOn: 'render',
+      rippleEffect: {
+        brushType: 'stroke'
+      },
+      hoverAnimation: true,
+      label: {
+        normal: {
+          show: false
+        }
+      },
+      itemStyle: {
+        normal: {
+          color: '#f4e925',
+          shadowBlur: 10,
+          shadowColor: '#333'
+        }
+      },
+      zlevel: 1
+    }
+  ]
+})
 ```
 
-## 四. 配置Vuex管理和分发数据
+## 四、配置 Vuex 管理和分发数据
 
-1.在ChinaMap.js中引入vuex和axios。
+4.1 在 `ChinaMap.js` 中引入 Vuex 和 Axios。
 
 ```
 import axios from 'axios'
 ```
 
-2.设置必要的变量。
+4.2 设置必要的变量。
 
 ```
 const state = {
@@ -214,12 +221,12 @@ const state = {
   // 发光的城市
   showCityNumber: 5,
   showCount: 0,
-  // 是否需要loading
+  // 是否需要 Loading
   isLoading: true
 }
 ```
 
-3.在actions中抓取后台数据并更新地图。
+4.3 在 `actions` 中抓取后台数据并更新地图。
 
 ```
 const actions = {
@@ -263,8 +270,9 @@ const actions = {
 }
 ```
 
-此时`npm run dev`已经可以看到中国地图上闪闪的黄色小点点。
-若想改变她使动态展示，可以在index.vue中mounted下面加上：
+此时 `npm run dev` 已经可以看到中国地图上闪闪的黄色小点点。
+
+若想改变她使动态展示，可以在 `index.vue` 中 `mounted` 下面加上：
 
 ```
 chinaMap.showLoading(showLoadingDefault)
@@ -275,7 +283,7 @@ setInterval(() => {
 }, 1000)
 ```
 
-在ChinaMap.js中actions的mutations中fetchHeatChinaRealData修改：
+在 `ChinaMap.js` 中 `actions` 的 `mutations` 中 `fetchHeatChinaRealData` 修改：
 
 ```
 let lightData = paleData.sort((a, b) => {
@@ -287,9 +295,9 @@ if (state.isLoading) {
 }
 ```
 
-## 五. 其它
+## 五、其它
 
-别忘了在main.js里面引入Vuex。
+5.1 别忘了在 `main.js` 里面引入 Vuex。
 
 ```
 import Vue from 'vue'
@@ -304,5 +312,8 @@ let ChinaMap = new Vue({
 })
 
 Vue.use(ChinaMap)
-
 ```
+
+5.2 案例代码
+
+GitHub：[https://github.com/mazeyqian/vue-china-map](https://github.com/mazeyqian/vue-china-map)
